@@ -1,9 +1,14 @@
 const express = require('express')
+const dotenv = require('dotenv');
 const app = express()
 const port = 3000
 const path = require('path')
+const { connectDB } = require('./src/db')
 
 app.set('view engine', 'ejs')
+
+dotenv.config();
+connectDB()
 
 const user = {
     firstName: 'Connor',
@@ -33,5 +38,10 @@ app.get('/user', (req, res) =>{
 app.listen(port, () => {
     console.log(`Hello World app listening on port ${port}`)
 })
+
+app.use("/graphql", graphqlHTTP({
+    schema,
+    graphiql: true
+}))
 
 app.use(express.static(path.join(__dirname,'public')))
