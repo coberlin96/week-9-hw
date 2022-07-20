@@ -4,6 +4,8 @@ const app = express()
 const port = 3000
 const path = require('path')
 const { connectDB } = require('./src/db')
+const { graphqlHTTP } = require('express-graphql')
+const schema = require('./src/graphql/schema')
 
 app.set('view engine', 'ejs')
 

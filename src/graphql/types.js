@@ -38,13 +38,13 @@ const PostType = new GraphQLObjectType({
         tags:{
             type: new GraphQLList(TagType),
             resolve(parent, args){
-                return Tag.find(parent.userID)
+                return Tag.find({postID: parent.id})
             }
         }
     })
 })
 
-const TagType = new GraphQLInputObjectType({
+const TagType = new GraphQLObjectType({
     name: 'Tag',
     description: 'Tag Type',
     fields:()=>({
@@ -54,8 +54,14 @@ const TagType = new GraphQLInputObjectType({
         posts:{
             type: new GraphQLList(PostType),
             resolve(parent, args){
-                return Post.find(parent.userID)
+                return Post.find({tagID: parent.id})
             }
         }
     })
 })
+
+module.exports = {
+    UserType,
+    PostType,
+    TagType
+}
